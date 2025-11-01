@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   
-    <link rel="icon" href="/img/favicon.png">
+    <link rel="icon" href="/img/head.png">
   
   
       <meta name="author" content="SweCui">
@@ -92,28 +92,6 @@
                         
                         
                     <li class="layui-nav-item">
-                        <a href="/tags/ ">
-                            <i class=" fas fa-hashtag " style="color: rgb(254 202 87);"></i>
-                            <span class="layui-nav-item-name">标签</span>
-                        </a>
-                    </li>
-                    
-                        
-                        
-                        
-                        
-                    <li class="layui-nav-item">
-                        <a href="/categories ">
-                            <i class=" far fa-folder-open " style="color: rgb(29 209 161);"></i>
-                            <span class="layui-nav-item-name">分类</span>
-                        </a>
-                    </li>
-                    
-                        
-                        
-                        
-                        
-                    <li class="layui-nav-item">
                         <a href="/about/ ">
                             <i class=" fab fa-grav " style="color: rgb(154 106 247);"></i>
                             <span class="layui-nav-item-name">关于</span>
@@ -164,7 +142,7 @@
     
       <div class="recent-post-item">
           <div class="post-title ">
-            <a href="/2025/11/01/hello-world/">Hello World</a>
+            <a href="/2025/11/01/Git/">git项目版本管理（Ubuntu）</a>
           </div>
           <div class="post-meta">
             
@@ -180,7 +158,7 @@
             
              <div class="post-meta-item wordcount">
                 
-                  <i class="fas fa-pencil-alt"></i> <span class="post-count">75 字</span>
+                  <i class="fas fa-pencil-alt"></i> <span class="post-count">356 字</span>
                    
                 
                   <i class="far fa-clock"></i> <span class="post-count">1 分钟</span>
@@ -190,19 +168,54 @@
         </div>
           <div class="content">
             
-                  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                  <h2 id="git安装和配置"><a href="#git安装和配置" class="headerlink" title="git安装和配置"></a>git安装和配置</h2><h3 id="Linux系统安装git"><a href="#Linux系统安装git" class="headerlink" title="Linux系统安装git"></a><u>Linux系统安装git</u></h3><p>首先注册一个github或者gitee账号，用于上传代码</p>
+<h4 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h4 id="验证git安装"><a href="#验证git安装" class="headerlink" title="验证git安装"></a>验证git安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a><u>配置git</u></h3><h4 id="生成ssh密钥"><a href="#生成ssh密钥" class="headerlink" title="生成ssh密钥"></a>生成ssh密钥</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C&quot;你的github/gitee邮箱&quot;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>一直确定后会在你的目录下生成一个文件夹，里面有id_rsa和id_rsa.pub两个文件<br>id_rsa———–私钥<br>id_rsa.pub—–公钥   </p>
+<h4 id="复制公钥"><a href="#复制公钥" class="headerlink" title="复制公钥"></a>复制公钥</h4><p>输入下面命令终端会显示公钥,把公钥复制</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub  </span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>登录github&#x2F;gitee账号,添加密钥(把复制的公钥粘贴上去)</p>
+<h4 id="验证SSH连接"><a href="#验证SSH连接" class="headerlink" title="验证SSH连接"></a>验证SSH连接</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<h4 id="编辑-gitconfig文件"><a href="#编辑-gitconfig文件" class="headerlink" title="编辑.gitconfig文件"></a>编辑.gitconfig文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name github/gitee名字</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email github/gitee邮箱</span><br></pre></td></tr></table></figure>
+
+<h2 id="上传项目"><a href="#上传项目" class="headerlink" title="上传项目"></a>上传项目</h2><h3 id="项目上传部分"><a href="#项目上传部分" class="headerlink" title="项目上传部分"></a><u>项目上传部分</u></h3><p>终端进入要上传的项目目录下</p>
+<h4 id="初始化本地库"><a href="#初始化本地库" class="headerlink" title="初始化本地库"></a>初始化本地库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init	   </span><br></pre></td></tr></table></figure>
+
+<h4 id="添加所有文件到暂存区"><a href="#添加所有文件到暂存区" class="headerlink" title="添加所有文件到暂存区"></a>添加所有文件到暂存区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .	   </span><br></pre></td></tr></table></figure>
+
+<h4 id="添加单个文件到暂存区"><a href="#添加单个文件到暂存区" class="headerlink" title="添加单个文件到暂存区"></a>添加单个文件到暂存区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add 文件名	   </span><br></pre></td></tr></table></figure>
+
+<h4 id="提交到本地库"><a href="#提交到本地库" class="headerlink" title="提交到本地库"></a>提交到本地库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;说明信息&quot;   </span><br></pre></td></tr></table></figure>
+
+<h4 id="查看提交历史记录"><a href="#查看提交历史记录" class="headerlink" title="查看提交历史记录"></a>查看提交历史记录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log    </span><br></pre></td></tr></table></figure>
+
+<h4 id="查看当前仓库状态"><a href="#查看当前仓库状态" class="headerlink" title="查看当前仓库状态"></a>查看当前仓库状态</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status	   </span><br></pre></td></tr></table></figure>
+
+<h4 id="清理缓存区"><a href="#清理缓存区" class="headerlink" title="清理缓存区"></a>清理缓存区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rm origin</span><br></pre></td></tr></table></figure>
+
+<h4 id="推送到指定分支的远程库"><a href="#推送到指定分支的远程库" class="headerlink" title="推送到指定分支的远程库"></a>推送到指定分支的远程库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin 分支名  </span><br></pre></td></tr></table></figure>
+
+<h3 id="分支管理部分"><a href="#分支管理部分" class="headerlink" title="分支管理部分"></a><u>分支管理部分</u></h3><h4 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch 分支名						</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -v</span><br></pre></td></tr></table></figure>
+
+<h4 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout 分支名</span><br></pre></td></tr></table></figure>
+
+<h4 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge 分支名</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d 分支名</span><br></pre></td></tr></table></figure>
+<h4 id="版本穿梭"><a href="#版本穿梭" class="headerlink" title="版本穿梭"></a>版本穿梭</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 版本号					</span><br></pre></td></tr></table></figure>
 
              
           </div>
