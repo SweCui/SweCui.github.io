@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+    <link rel="icon" href="/img/head.png">
+  
+  
+      <meta name="author" content="SweCui">
+  
+  
+  
+      <meta name="description" content="一个fw的blog">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml " title="SweCui" type="application/atom+xml">
+  
+
+  
+
+  <title>Cmake | SweCui</title>
+
+  
+
+  
+
+  
+
+  <link rel="stylesheet" href="/css/style.css" >
+  <link rel="stylesheet" href="/css/partial/dark.css" >
+
+  
+  
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/partial/highlight/github.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/css/iconfont.css">
+    
+  
+
+  
+    <script src="/js/todark.js"></script>
+    
+<meta name="generator" content="Hexo 8.1.1"></head>
+</html>
+    
+<div class="nav index" style="height: 60px;">
+    <div class="title animated fadeInDown">
+        <div class="layui-container">
+                <div class="nav-title"><a href="/" title="SweCui">SweCui</a></div>
+            <div class="nav-list">
+                <button> <span class=""></span><span style="display: block;"></span><span class=""></span> </button>
+                <ul class="layui-nav" lay-filter="">
+                    
+                        
+                        
+                        
+                        
+                    <li class="layui-nav-item">
+                        <a href="/ ">
+                            <i class=" fab fa-fort-awesome " style="color: rgb(255 107 107);"></i>
+                            <span class="layui-nav-item-name">首页</span>
+                        </a>
+                    </li>
+                    
+                        
+                        
+                        
+                        
+                    <li class="layui-nav-item">
+                        <a href="/archives/ ">
+                            <i class=" fas fa-archive " style="color: rgb(10 189 227);"></i>
+                            <span class="layui-nav-item-name">归档</span>
+                        </a>
+                    </li>
+                    
+                        
+                        
+                        
+                        
+                    <li class="layui-nav-item">
+                        <a href="/about/ ">
+                            <i class=" fab fa-grav " style="color: rgb(154 106 247);"></i>
+                            <span class="layui-nav-item-name">关于</span>
+                        </a>
+                    </li>
+                    
+                    
+                        <li class="layui-nav-item" id="btn-toggle-dark">🌙</li>
+                    
+                    <span class="layui-nav-bar" style="left: 342px; top: 78px; width: 0px; opacity: 0;"></span>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<header class="header">
+        
+            <div class="logo">
+                    <a href="/"><img src="/img/head.jpg" onerror=this.onerror=null,this.src="/img/loading.gif"></a>
+            </div>
+         
+    </div>
+     
+
+            <div class="motto">
+                <span>答案在路上,自由在风里.</span>
+            </div>
+    
+    
+            <div class="social">
+                
+                        <a class="social-icon" href="https://github.com/SweCui" target="_blank" title="Github">
+                            <i class="iconfont icon-GitHub" aria-hidden="true"></i>
+                          </a>
+                 
+                        <a class="social-icon" href="https://space.bilibili.com/1543145150" target="_blank" title="Bilibili">
+                            <i class="iconfont icon-bilibili" aria-hidden="true"></i>
+                          </a>
+                 
+            </div>
+     
+</header>
+
+    
+<article id="post">
+  <div class="post-title">Cmake</div>
+  
+<div class="post-meta">
+    
+    
+      <div class="post-meta-item date">
+        <span title="发表于 2025.11.03"><i class="far fa-calendar-alt"></i> 2025.11.03</span>
+      </div>
+      <div class="post-meta-item updated">
+        <span title="更新于 2025.11.03"><i class="far fa-calendar-check"></i> 2025.11.03</span>
+      </div>
+     
+     
+    
+     <div class="post-meta-item wordcount">
+        
+          <i class="fas fa-pencil-alt"></i> <span class="post-count">2k 字</span>
+           
+        
+          <i class="far fa-clock"></i> <span class="post-count">8 分钟</span>
+                               
+      </div>
+     
+</div>
+
+
+  
+    <div id="toc" class="toc">
+          <h1>目录</h1>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CMake%E6%B5%81%E7%A8%8B%EF%BC%88%E5%B8%B8%E7%94%A8%E6%B5%81%E7%A8%8B%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">CMake流程（常用流程）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%9E%84%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="toc-number">3.1.</span> <span class="toc-text">创建构建目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5%E6%9E%84%E5%BB%BA%E7%9B%AE%E5%BD%95"><span class="toc-number">3.2.</span> <span class="toc-text">进入构建目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-CMake-%E5%91%BD%E4%BB%A4%E7%94%9F%E6%88%90%E6%9E%84%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">使用 CMake 命令生成构建文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E6%9E%84%E5%BB%BA"><span class="toc-number">3.4.</span> <span class="toc-text">编译和构建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%90%86%E6%9E%84%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="toc-number">3.5.</span> <span class="toc-text">清理构建文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E9%85%8D%E7%BD%AE%E5%92%8C%E6%9E%84%E5%BB%BA"><span class="toc-number">3.6.</span> <span class="toc-text">重新配置和构建</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CMakeLists-txt%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">CMakeLists.txt文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">4.1.</span> <span class="toc-text">继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">4.2.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%92%8C%E7%BC%93%E5%AD%98"><span class="toc-number">4.2.1.</span> <span class="toc-text">变量和缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">4.2.2.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93"><span class="toc-number">4.2.3.</span> <span class="toc-text">第三方库</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%80%E9%99%90"><span class="toc-number">5.</span> <span class="toc-text">局限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E8%AF%A6%E7%BB%86%E4%BA%86%E8%A7%A3%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99"><span class="toc-number">5.1.</span> <span class="toc-text">更详细了解可以看其他资料</span></a></li></ol></li></ol>
+      </div>
+    
+  <div class="content">
+        <div><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p><strong>CMake</strong> 是一个跨平台的安装(编译)工具，可以用简单的语句来描述所有平台的安装(编译过</p>
+<p>程)。能够输出各种各样的 makefile 或者 project 文件，能测试编译器所支持的 C++特</p>
+<p>性。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><a target="_blank" rel="noopener" href="http://www.cmake.org/">www.cmake.org</a> 下载需要的 cmake 版本，根据安装说明安装。</p>
+<p>安装完成后，打开命令行，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake --version</span><br></pre></td></tr></table></figure>
+
+<p>如果看到类似如下的字符串，说明你安装成功了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake version 3.22.1</span><br></pre></td></tr></table></figure>
+
+<h1 id="CMake流程（常用流程）"><a href="#CMake流程（常用流程）" class="headerlink" title="CMake流程（常用流程）"></a><strong>CMake流程（常用流程）</strong></h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">示例</span><br><span class="line"></span><br><span class="line">Test<span class="emphasis">_Project/</span></span><br><span class="line"><span class="emphasis">├── CMakeLists.txt   </span></span><br><span class="line"><span class="emphasis">├── src/</span></span><br><span class="line"><span class="emphasis">│   ├── main.cpp</span></span><br><span class="line"><span class="emphasis">│   └── example.cpp        </span></span><br><span class="line"><span class="emphasis">└── include/</span></span><br><span class="line"><span class="emphasis">    └── example.h</span></span><br><span class="line"><span class="emphasis">   </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>CMakeLists.txt 文件内容（后面会详细介绍）：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.22</span><span class="number">.1</span>)   # 指定最低 CMake 版本</span><br><span class="line"></span><br><span class="line"><span class="built_in">project</span>(Test_Project VERSION <span class="number">1.0</span>)      # 定义项目名称和版本</span><br><span class="line"></span><br><span class="line"># 设置 C++ 标准为 C+<span class="number">+11</span></span><br><span class="line"><span class="built_in">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_CXX_STANDARD_REQUIRED ON)</span><br><span class="line"></span><br><span class="line"># 添加头文件搜索路径</span><br><span class="line"><span class="built_in">include_directories</span>($&#123;PROJECT_SOURCE_DIR&#125;/include)</span><br><span class="line"></span><br><span class="line"># 添加源文件</span><br><span class="line"><span class="built_in">add_library</span>(Test_Lib src/example.cpp)   # 创建一个库目标 <span class="function">Test_Lib</span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">(demo src/main.cpp)</span>  # 创建一个可执行文件目标 demo</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"># 链接库到可执行文件</span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">(demo Test_Lib)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>命令行进入示例 Test_Project 目录下</p>
+<h2 id="创建构建目录"><a href="#创建构建目录" class="headerlink" title="创建构建目录"></a><strong>创建构建目录</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> build</span><br></pre></td></tr></table></figure>
+
+<h2 id="进入构建目录"><a href="#进入构建目录" class="headerlink" title="进入构建目录"></a><strong>进入构建目录</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> build</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-CMake-命令生成构建文件"><a href="#使用-CMake-命令生成构建文件" class="headerlink" title="使用 CMake 命令生成构建文件"></a><strong>使用 CMake 命令生成构建文件</strong></h2><p><strong>（源代码目录包含 CMakeLists.txt 文件）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake ..  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">&quot;Ninja&quot;</span> ..   <span class="comment"># 指定生成器，可以使用 -G 选项</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmake -DCMAKE_BUILD_TYPE=Release ..  </span><br><span class="line">cmake -DCMAKE_BUILD_TYPE=Debug ..</span><br><span class="line"><span class="comment"># 指定构建类型（如 Debug 或 Release），可以使用 -DCMAKE_BUILD_TYPE 选项</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="编译和构建"><a href="#编译和构建" class="headerlink" title="编译和构建"></a><strong>编译和构建</strong></h2><p>使用生成的构建文件进行编译和构建。</p>
+<p>不同的构建系统使用不同的命令（这里以Linux为例，其他以简要概括，想详细了解可以专门查一下）</p>
+<p>**使用 Makefile ：**运行 make 命令来编译和构建项目。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>如果要构建特定的目标，可以指定目标名称。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make MyExecutable</span><br></pre></td></tr></table></figure>
+
+<p>**其他：**与 make 类似</p>
+<p>例：使用 <strong>Ninja</strong> 运行 ninja 命令来编译和构建项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ninja</span><br></pre></td></tr></table></figure>
+
+<p>也可以构建特定的目标：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ninja MyExecutable</span><br></pre></td></tr></table></figure>
+
+<h2 id="清理构建文件"><a href="#清理构建文件" class="headerlink" title="清理构建文件"></a><strong>清理构建文件</strong></h2><p>构建过程中生成的中间文件和目标文件可以通过清理操作删除</p>
+<p>**使用 Makefile：**使用命令清理（如果定义了清理规则）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make clean</span><br></pre></td></tr></table></figure>
+
+<p>手动清理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf build/*</span><br></pre></td></tr></table></figure>
+
+<p><strong>其他同理</strong></p>
+<h2 id="重新配置和构建"><a href="#重新配置和构建" class="headerlink" title="重新配置和构建"></a><strong>重新配置和构建</strong></h2><p>如果修改了 CMakeLists.txt 文件或项目设置，需要重新配置和构建项目</p>
+<p>**重新运行 CMake 命令：**还在build目录中重新运行 CMake 配置命令生成构建文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake ..</span><br></pre></td></tr></table></figure>
+
+<p>**重新编译和构建：**使用构建命令重新编译项目。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<h1 id="CMakeLists-txt文件"><a href="#CMakeLists-txt文件" class="headerlink" title="CMakeLists.txt文件"></a><strong>CMakeLists.txt文件</strong></h1><p>CMakeLists.txt 是 CMake 的配置文件，用于定义项目的构建规则、依赖关系、编译选项等。通常 CMakeLists.txt 是和源代码放在一起的，每个 CMake 项目通常都有一个或多个 CMakeLists.txt 文件，一般每个子目录下都有一个CMakeLists.txt 用于组织该目录下的文件。针对具体的平台和配置，单独创建一个目录，在该目录下生成特定平台和配置的工程文件，做到工程文件不会和源代码文件混搭在一起。</p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>子目录的 CMakeLists.txt 自动继承父目录里的 CMakeLists.txt 所定义的一切宏、变量。极大地减少了重复的代码。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>CMakeLists.txt 文件使用一系列的 CMake 指令来描述构建过程，语法非常单纯，由指令(command) 和注解所组成，每个指令可有零至多个参数。使用指令的语法为指令名称加上小括号，括号内可以有零或若干个参数，指令则依照出现在CMakeLists 当中的顺序执行。所有的空白、换行、tab 都没有特殊作用，仅为语汇元素的区隔。</p>
+<p>常见的指令包括：（指令不区分大小写，但变量严格区分大小写！）</p>
+<h3 id="变量和缓存"><a href="#变量和缓存" class="headerlink" title="变量和缓存"></a>变量和缓存</h3><p>CMake 使用变量来存储和传递信息，这些变量可以在 CMakeLists.txt 文件中定义和使用。</p>
+<p>变量可以分为普通变量和缓存变量。</p>
+<p>变量具有以下特征：</p>
+<p>变量严格区分大小写！</p>
+<p>CMake 中的变量只有两种类型：字符串，和字符串数组。</p>
+<p>变量无需声明即可赋值或者使用。未赋值的变量默认为一个空字符串。</p>
+<p>与其他语言编程语言不同的是，CMake 脚本的语法中没有赋值操作。无论是赋值，还是比较、判断操作，都是通过内置指令来完成的。</p>
+<p>变量可以认为都是全局的，哪怕在一个宏中定义的变量，也可以在宏的外面被访问到。</p>
+<p><strong>定义变量：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(变量名 <span class="string">&quot;默认值&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(VAR <span class="string">&quot;Hello CMake&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用变量：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">message</span>(STATUS <span class="string">&quot;变量 VAR 是 $&#123;VAR&#125;&quot;</span>)  <span class="meta"># message打印指令</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>缓存变量</strong></p>
+<p>缓存变量存储在 CMake 的缓存文件中，用户可以在 CMake 配置时修改这些值。缓存变量通常用于用户输入的设置，例如编译选项和路径。</p>
+<p><strong>定义缓存变量：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(变量名 <span class="string">&quot;默认值&quot;</span> CACHE 变量类型 <span class="string">&quot;描述信息&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>变量类型，可以是以下几种：</p>
+<ul>
+<li><code>BOOL</code>：布尔值（ON&#x2F;OFF）。</li>
+<li><code>STRING</code>：字符串。</li>
+<li><code>PATH</code>：文件路径。</li>
+<li><code>FILEPATH</code>：文件路径。</li>
+<li><code>INTERNAL</code>：内部缓存变量，不会在图形界面中显示。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(VAR <span class="string">&quot;Hello CMake&quot;</span> CACHE STRING <span class="string">&quot;A Test Var&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用缓存变量：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">message</span>(STATUS <span class="string">&quot;Cache variable MY_CACHE_VAR is $&#123;MY_CACHE_VAR&#125;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a><strong>常用命令</strong></h3><p><strong>1.指定CMake最低版本要求</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION &lt;version&gt;)</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.22</span><span class="number">.1</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.定义项目名称和使用的编程语言</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">project</span>(&lt;project_name&gt; [&lt;language&gt;...])</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">project</span>(MyProject CXX)</span><br><span class="line"><span class="built_in">project</span>(Test_Project VERSION <span class="number">1.0</span>) </span><br></pre></td></tr></table></figure>
+
+<p><strong>3.指定要生成的可执行文件和其源文件</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_executable</span>(&lt;target&gt; &lt;source_files&gt;...)</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_executable</span>(demo src/main.cpp other_file.cpp)</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.创建一个库（静态库或动态库）及其源文件</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_library</span>(&lt;target&gt; [STATIC | SHARED | MODULE] &lt;source_files&gt;...) </span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>STATIC</code></td>
+<td>静态库</td>
+<td><code>.a</code> (Unix) &#x2F; <code>.lib</code> (Windows)</td>
+</tr>
+<tr>
+<td><code>SHARED</code></td>
+<td>动态库</td>
+<td><code>.so</code> (Unix) &#x2F; <code>.dll</code> (Windows)</td>
+</tr>
+<tr>
+<td><code>MODULE</code></td>
+<td>插件模块</td>
+<td><code>.so</code> (Unix) &#x2F; <code>.dll</code> (Windows)</td>
+</tr>
+</tbody></table>
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_library</span>(Test_Lib src/example.cpp)  # 类型由不指定类型 BUILD_SHARED_LIBS 变量控制</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_library</span>(Test_Lib STATIC src/example.cpp) # 创建名为 Test_Lib 的静态库</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_library</span>(Test_Lib SHARED src/example.cpp) # 创建名为 Test_Lib 的动态库</span><br></pre></td></tr></table></figure>
+
+<p><strong>5.链接目标文件与其他库</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">target_link_libraries</span>(&lt;target&gt; &lt;libraries&gt;...)</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">target_link_libraries</span>(demo Test_Lib)</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.添加头文件搜索路径</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">include_directories</span>(&lt;dirs&gt;...)</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">include_directories</span>($&#123;PROJECT_SOURCE_DIR&#125;/include)</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置变量的值</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(&lt;variable&gt; &lt;value&gt;...)</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置目标属性</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">target_include_directories</span>(TARGET target_name</span><br><span class="line">                          [BEFORE | AFTER]</span><br><span class="line">                          [SYSTEM] [PUBLIC | PRIVATE | INTERFACE]</span><br><span class="line">                          [items<span class="number">1.</span>..])</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">target_include_directories</span>(demo PRIVATE $&#123;PROJECT_SOURCE_DIR&#125;/include)</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装规则</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">install</span>(TARGETS target1 [target2 ...]</span><br><span class="line">        [RUNTIME DESTINATION dir]</span><br><span class="line">        [LIBRARY DESTINATION dir]</span><br><span class="line">        [ARCHIVE DESTINATION dir]</span><br><span class="line">        [INCLUDES DESTINATION [dir ...]]</span><br><span class="line">        [PRIVATE_HEADER DESTINATION dir]</span><br><span class="line">        [PUBLIC_HEADER DESTINATION dir])</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">install</span>(TARGETS demo RUNTIME DESTINATION bin)</span><br></pre></td></tr></table></figure>
+
+<p><strong>条件语句 (if, elseif, else, endif 命令)</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(expression)</span><br><span class="line">  # <span class="function">Commands</span></span><br><span class="line"><span class="function"><span class="title">elseif</span><span class="params">(expression)</span></span></span><br><span class="line"><span class="function">  # Commands</span></span><br><span class="line"><span class="function"><span class="title">else</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  # Commands</span></span><br><span class="line"><span class="function"><span class="title">endif</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_BUILD_TYPE STREQUAL <span class="string">&quot;Debug&quot;</span>)</span><br><span class="line">  <span class="built_in">message</span>(<span class="string">&quot;Debug build&quot;</span>)</span><br><span class="line"><span class="built_in">endif</span>()</span><br></pre></td></tr></table></figure>
+
+<p><strong>自定义命令 (add_custom_command 命令)：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_custom_command</span>(</span><br><span class="line">   TARGET target</span><br><span class="line">   PRE_BUILD | PRE_LINK | POST_BUILD</span><br><span class="line">   COMMAND command1 [ARGS] [WORKING_DIRECTORY dir]</span><br><span class="line">   [COMMAND command2 [ARGS]]</span><br><span class="line">   [DEPENDS [depend1 [depend2 ...]]]</span><br><span class="line">   [COMMENT comment]</span><br><span class="line">   [VERBATIM]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_custom_command</span>(</span><br><span class="line">   TARGET MyExecutable POST_BUILD</span><br><span class="line">   COMMAND $&#123;CMAKE_COMMAND&#125; -E echo <span class="string">&quot;Build completed.&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>查找库和包</strong></p>
+<p>CMake 可以通过 find_package() 指令自动检测和配置外部库和包。常用于查找系统安装的库或第三方库。</p>
+<p><strong>find_package() 指令</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find_package</span>(Boost REQUIRED)</span><br></pre></td></tr></table></figure>
+
+<p>指定版本：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find_package</span>(Boost <span class="number">1.70</span> REQUIRED)</span><br></pre></td></tr></table></figure>
+
+<p>查找库并指定路径：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find_package</span>(OpenCV REQUIRED PATHS /path/to/opencv)</span><br></pre></td></tr></table></figure>
+
+<p>使用查找到的库：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">target_link_libraries</span>(MyExecutable Boost::Boost)</span><br></pre></td></tr></table></figure>
+
+<p>设置包含目录和链接目录：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">include_directories</span>($&#123;Boost_INCLUDE_DIRS&#125;)</span><br><span class="line"><span class="built_in">link_directories</span>($&#123;Boost_LIBRARY_DIRS&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三方库"><a href="#第三方库" class="headerlink" title="第三方库"></a>第三方库</h3><p>例：</p>
+<p>使用 Boost 库，CMakeLists.txt 文件可能如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">project</span>(MyProject CXX)         # 查找 Boost 库</span><br><span class="line"></span><br><span class="line"><span class="built_in">find_package</span>(Boost REQUIRED)   # 添加源文件</span><br><span class="line"></span><br><span class="line"><span class="built_in">add_executable</span>(MyExecutable main.cpp)   # 链接 Boost 库</span><br><span class="line"></span><br><span class="line"><span class="built_in">target_link_libraries</span>(MyExecutable Boost::Boost)</span><br></pre></td></tr></table></figure>
+
+<h1 id="局限"><a href="#局限" class="headerlink" title="局限"></a>局限</h1><p>CMake 并不遵守 GNU 规则。这使得 CMake 对一些开源软件的支持不够。</p>
+<p>例如：CMake 生成出的工程在 Linux 下不支持 make uninstall。</p>
+<p>CMake 和其他编译系统会打架，处理起来不容易。</p>
+<p>例如：如果不用 Qt 自带的QMake，而是用 CMake 去编译 Qt 工程，会很费时费力。</p>
+<p>CMake 不会认识开发者在 IDE 中新增加的文件。必须通过修改 CMakeLists.txt，才能让 CMake 知道有新的文件。</p>
+<h3 id="更详细了解可以看其他资料"><a href="#更详细了解可以看其他资料" class="headerlink" title="更详细了解可以看其他资料"></a>更详细了解可以看其他资料</h3></div>
+        
+  </div>
+
+    <div class="post_tags">
+      
+    </div>
+    <div class="post-nav">
+      
+      
+        <div class="post-nav-next post-nav-item">
+            <a href="/2025/11/01/Git/" >git项目版本管理（Ubuntu）<i class="fa fa-chevron-right"></i></a>
+        </div>
+      
+    </div>
+      
+
+
+
+
+</article>
+
+    
+<a id="gotop" href="javascript:" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    
+
+
+
+
+
+
+    
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        © 2025 <i class="fa fa-heart" id="heart"></i> SweCui 
+        <br>
+        Powered by 
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo</a> | Theme is <a target="_blank" rel="noopener" href="https://github.com/a2396837/hexo-theme-blank/">blank</a>
+        
+          <div class="icp-info">
+            
+          <a href="" target="_blank"> </a>
+        </div>
+        
+    </div>  
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/layui-src@2.5.5/dist/layui.min.js"></script>
+
+
+
+  
+    <script src="/js/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+  
+
+ 
+
+
+
+  <script>
+    window.lazyLoadOptions = {
+      elements_selector: 'img',
+      threshold: 0
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script>   
+  
+
+
+  <script>
+    var images = $('img').not('.nav-logo img').not('.card img').not($('a>img')).not('.reward-content img')
+    images.each(function (i, o) {
+      var lazyloadSrc = $(o).attr('data-src') ? $(o).attr('data-src') : $(o).attr('src')
+      $(o).wrap(`<a href="${lazyloadSrc}" data-fancybox="group" data-caption="${$(o).attr('alt')}" class="fancybox"></a>`)
+    })
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script>
+  <script>
+        $().fancybox({
+      selector: '[data-fancybox]',
+      loop: true,
+      transitionEffect: 'slide',
+      protect: true,
+      buttons: ['slideShow', 'fullScreen', 'thumbs', 'close']
+    })
+  </script>   
+  
+
+
+
+
+  
+<script>
+if (document.getElementsByClassName('mermaid').length) {
+    if (window.mermaidJsLoad) mermaid.init()
+    else {
+      $.getScript("https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js", function () {
+        window.mermaidJsLoad = true
+        mermaid.initialize({
+          theme: "default",
+        })
+      })
+    }
+  }
+  </script>
+  
+
+
+
+
+  
+<div id="QPlayer">
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+				<div class="adf"><i class="fas fa-music" style="color: #Fff;"></i></div>
+		</div>
+	</div>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/css/audio.css">
+	<ol id="playlist"></ol>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery.marquee@1.5.0/jquery.marquee.min.js"></script>
+<script>
+	var playlist = [];
+	
+		  playlist.push({title:'所念皆星河',artist:'CMJ',mp3:'https://music.163.com/song/media/outer/url?id=1384026889.mp3',cover:'https://p4.music.126.net/M34HFzLO2xhDLuX_zEALKA==/109951164291347934.jpg'})
+	  
+	var isRotate = true;
+	var autoplay = false;
+  </script>
+<script src="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/js/player.js"></script>
+<script>
+  function bgChange(){
+	var lis= $('.lib');
+	for(var i=0; i<lis.length; i+=2)
+	lis[i].style.background = 'rgba(246, 246, 246, 0.5)';
+  }
+  window.onload = bgChange;
+</script>
+
+  
+
+
+  <script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script>
+  
+
+
+  <script src="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/js/firework.js"></script>
+  
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"></script>
+<script>
+!function (e, t, a) {
+  var initCopyCode = function(){
+    var copyHtml = '';
+    copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+    copyHtml += '  <i class="fa fa-clipboard"></i><span>复制</span>';
+    copyHtml += '</button>';
+    $(".highlight .code pre").before(copyHtml);
+    new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+  }
+  initCopyCode();
+}(window, document);
+</script>  
+  
+
+<script>
+  var btntop = $('#gotop');
+  btntop.on('click', function (e) {
+    e.preventDefault();
+    $('html, body').animate({ scrollTop: 0 }, '300');
+  });
+
+  var $table = $('.content table').not($('figure.highlight > table'))
+$table.each(function () {
+  $(this).wrap('<div class="table-wrap"></div>')
+})
+</script>
+
+
+
+</html>
