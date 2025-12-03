@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+      <meta name="author" content="SweCui">
+  
+  
+  
+      <meta name="description" content="一个fw的blog">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml " title="SweCui" type="application/atom+xml">
+  
+
+  
+
+  <title>ROS2基础 | SweCui</title>
+
+  
+
+  
+
+  
+
+  <link rel="stylesheet" href="/css/style.css" >
+  <link rel="stylesheet" href="/css/partial/dark.css" >
+
+  
+  
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/partial/highlight/github.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/css/iconfont.css">
+    
+  
+
+  
+    <script src="/js/todark.js"></script>
+    
+<meta name="generator" content="Hexo 8.1.1"></head>
+</html>
+    
+<div class="nav index" style="height: 60px;">
+    <div class="title animated fadeInDown">
+        <div class="layui-container">
+                <div class="nav-title"><a href="/" title="SweCui">SweCui</a></div>
+            <div class="nav-list">
+                <button> <span class=""></span><span style="display: block;"></span><span class=""></span> </button>
+                <ul class="layui-nav" lay-filter="">
+                    
+                        
+                        
+                        
+                        
+                    <li class="layui-nav-item">
+                        <a href="/ ">
+                            <i class=" fab fa-fort-awesome " style="color: rgb(255 107 107);"></i>
+                            <span class="layui-nav-item-name">首页</span>
+                        </a>
+                    </li>
+                    
+                        
+                        
+                        
+                        
+                    <li class="layui-nav-item">
+                        <a href="/archives/ ">
+                            <i class=" fas fa-archive " style="color: rgb(10 189 227);"></i>
+                            <span class="layui-nav-item-name">归档</span>
+                        </a>
+                    </li>
+                    
+                        
+                        
+                        
+                        
+                    <li class="layui-nav-item">
+                        <a href="/about/ ">
+                            <i class=" fab fa-grav " style="color: rgb(154 106 247);"></i>
+                            <span class="layui-nav-item-name">关于</span>
+                        </a>
+                    </li>
+                    
+                    
+                        <li class="layui-nav-item" id="btn-toggle-dark">🌙</li>
+                    
+                    <span class="layui-nav-bar" style="left: 342px; top: 78px; width: 0px; opacity: 0;"></span>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<header class="header">
+        
+            <div class="logo">
+                    <a href="/"><img src="/img/head.jpg" onerror=this.onerror=null,this.src="/img/loading.gif"></a>
+            </div>
+         
+    </div>
+     
+
+            <div class="motto">
+                <span>答案在路上,自由在风里.</span>
+            </div>
+    
+    
+            <div class="social">
+                
+                        <a class="social-icon" href="https://github.com/SweCui" target="_blank" title="Github">
+                            <i class="iconfont icon-GitHub" aria-hidden="true"></i>
+                          </a>
+                 
+                        <a class="social-icon" href="https://space.bilibili.com/1543145150" target="_blank" title="Bilibili">
+                            <i class="iconfont icon-bilibili" aria-hidden="true"></i>
+                          </a>
+                 
+            </div>
+     
+</header>
+
+    
+<article id="post">
+  <div class="post-title">ROS2基础</div>
+  
+<div class="post-meta">
+    
+    
+      <div class="post-meta-item date">
+        <span title="发表于 2025.12.03"><i class="far fa-calendar-alt"></i> 2025.12.03</span>
+      </div>
+      <div class="post-meta-item updated">
+        <span title="更新于 2025.12.03"><i class="far fa-calendar-check"></i> 2025.12.03</span>
+      </div>
+     
+     
+    
+     <div class="post-meta-item wordcount">
+        
+          <i class="fas fa-pencil-alt"></i> <span class="post-count">1.6k 字</span>
+           
+        
+          <i class="far fa-clock"></i> <span class="post-count">6 分钟</span>
+                               
+      </div>
+     
+</div>
+
+
+  
+    <div id="toc" class="toc">
+          <h1>目录</h1>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ROS%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">ROS介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8A%82%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%9D%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">话题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.3.</span> <span class="toc-text">服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9C"><span class="toc-number">1.5.</span> <span class="toc-text">动作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%90%AD%E5%BB%BAros2%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">搭建ros2环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85ROS2"><span class="toc-number">2.1.</span> <span class="toc-text">安装ROS2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%AE%89%E8%A3%85"><span class="toc-number">2.1.1.</span> <span class="toc-text">测试安装</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BDROS2"><span class="toc-number">2.2.</span> <span class="toc-text">卸载ROS2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ros2%E4%BD%BF%E7%94%A8%EF%BC%88%E5%9F%BA%E7%A1%80%E8%8A%82%E7%82%B9%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">ros2使用（基础节点使用）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="toc-number">3.1.</span> <span class="toc-text">1.创建工作空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E5%8A%9F%E8%83%BD%E5%8C%85"><span class="toc-number">3.2.</span> <span class="toc-text">2.创建功能包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E8%BE%91%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">3.编辑源文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.4.</span> <span class="toc-text">4.编辑配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BC%96%E8%AF%91%E5%92%8C%E6%89%A7%E8%A1%8C"><span class="toc-number">3.5.</span> <span class="toc-text">5.编译和执行</span></a></li></ol></li></ol>
+      </div>
+    
+  <div class="content">
+        <div><h1 id="ROS介绍"><a href="#ROS介绍" class="headerlink" title="ROS介绍"></a>ROS介绍</h1><p>ROS（Robot Operating System，机器人操作系统），但ROS本身并不是一个操作系统，而是可以安装在现在已有的操作系统上的软件库和工具集<br>ROS是用来解决了机器人各个组件之间的通信问题，基于ROS完善的通信机制，很多优秀的机器人算法集成到了ROS中，随着ROS功能上要求越来越多，ROS不断的添加新功能，ROS变得越来越臃肿，于是ROS官方重新设计制作了ROS2，ROS2的架构和ROS1的架构有些相似，但是ROS2的架构更加清晰。<br>ROS2一整套通信机制共有四种通信方式：话题、服务、参数、动作</p>
+<h3 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h3><p>ROS 中的每个节点都应负责单一的模块化目的，例如控制车轮电机或发布来自激光测距仪的传感器数据。每个节点都可以通过主题、服务、操作或参数从其他节点发送和接收数据。完整的机器人系统由许多协同工作的节点组成。在 ROS 2 中，单个可执行文件（C++ 程序、Python 程序等）可以包含一个或多个节点。</p>
+<h3 id="话题"><a href="#话题" class="headerlink" title="话题"></a>话题</h3><p>ROS 2 将复杂的系统分解为许多模块化节点。话题是 ROS 图的重要元素，充当节点交换消息的总线。节点可以将数据发布到任意数量的话题，并同时订阅任意数量的话题。话题是数据在节点之间移动以及因此在系统的不同部分之间移动的主要方式之一。</p>
+<h3 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h3><p>服务是 ROS 图中节点通信的另一种方法。服务基于调用和响应模型，而不是主题的发布者-订阅者模型。虽然主题允许节点订阅数据流并获取持续更新，但服务仅在客户端专门调用时才提供数据。</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>参数是节点的配置值。您可以将参数视为节点设置。节点可以将参数存储为整数、浮点数、布尔值、字符串和列表。在ROS 2中，每个节点维护自己的参数。</p>
+<h3 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h3><p>动作是 ROS 2 中的通信类型之一，适用于长时间运行的任务。它们由三部分组成：目标、反馈和结果。动作建立在主题和服务的基础上。它们的功能与服务类似，只是可以取消操作。它们还提供稳定的反馈，而不是返回单一响应的服务。操作使用客户端-服务器模型，类似于发布者-订阅者模型。 “动作客户端”节点将目标发送到“动作服务器”节点，“动作服务器”节点确认该目标并返回反馈流和结果。</p>
+<h1 id="搭建ros2环境"><a href="#搭建ros2环境" class="headerlink" title="搭建ros2环境"></a>搭建ros2环境</h1><h3 id="安装ROS2"><a href="#安装ROS2" class="headerlink" title="安装ROS2"></a>安装ROS2</h3><p>直接用鱼香ROS的一键安装（建议自己换源）,顺便一键安装rosdep和配置环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://fishros.com/install -O fishros &amp;&amp; . fishros</span><br></pre></td></tr></table></figure>
+<h4 id="测试安装"><a href="#测试安装" class="headerlink" title="测试安装"></a>测试安装</h4><p>小乌龟案例<br>打开两个终端(可以使用快捷键Ctrl + Alt + T)；<br>终端1中输入指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 run turtlesim turtlesim_node</span><br></pre></td></tr></table></figure>
+<p>终端2中输入指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 run turtlesim turtle_teleop_key</span><br></pre></td></tr></table></figure>
+<h3 id="卸载ROS2"><a href="#卸载ROS2" class="headerlink" title="卸载ROS2"></a>卸载ROS2</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt remove ros...</span><br><span class="line">sudo apt autoremove</span><br></pre></td></tr></table></figure>
+
+<h1 id="ros2使用（基础节点使用）"><a href="#ros2使用（基础节点使用）" class="headerlink" title="ros2使用（基础节点使用）"></a>ros2使用（基础节点使用）</h1><h3 id="1-创建工作空间"><a href="#1-创建工作空间" class="headerlink" title="1.创建工作空间"></a>1.创建工作空间</h3><p>创建工作空间以及子级目录 src，工作空间名称可以自定义</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p &lt;ws_name&gt;/src</span><br></pre></td></tr></table></figure>
+
+<p>进入工作空间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;ws_name&gt; </span><br></pre></td></tr></table></figure>
+<p><img src= "/img/loading.gif" data-src="/img/ros2_1.png" alt=" ">  </p>
+<h3 id="2-创建功能包"><a href="#2-创建功能包" class="headerlink" title="2.创建功能包"></a>2.创建功能包</h3><p>ROS2中提供了一个<code>colcon</code>工具来管理构建。使用<code>ros2 pkg create</code>命令创建新包。这里的<code>--build-type</code>需要指定构建的类型：<code>ament_python</code>、<code>ament_cmake</code>。<code>--dependencies xxx xxx</code>表示需要依赖的包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 pkg create --build-type &lt;build-type&gt; &lt;package_name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>(注:在src目录下)</p>
+<p>示例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/ros_ws/src</span><br><span class="line">ros2 pkg create --build-type ament_cmake pkg01_helloworld_cpp    <span class="comment"># C++</span></span><br></pre></td></tr></table></figure>
+
+<p>创建好的功能包里面会有像下面一样（后续以这个功能包为示例）<br><img src= "/img/loading.gif" data-src="/img/ros2_2.png" alt=" ">  </p>
+<h3 id="3-编辑源文件"><a href="#3-编辑源文件" class="headerlink" title="3.编辑源文件"></a>3.编辑源文件</h3><p>在功能包的src目录下创建一个 *.cpp（helloworld.cpp）文件</p>
+<p>流程:</p>
+<p>1.包含头文件;</p>
+<p>2.初始化 ROS2客户端;</p>
+<p>3.创建<strong>节点</strong>指针;</p>
+<p>4.输出日志;</p>
+<p>5.释放资源.</p>
+<p>初始化–&gt;节点对象–&gt;日志输出–&gt;数据的发布–&gt;数据订阅–&gt;…–&gt;资源释放</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.包含头文件;</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;rclcpp/rclcpp.hpp&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> <span class="type">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// 2.初始化 ROS2客户端;</span></span><br><span class="line">rclcpp::<span class="built_in">init</span>(argc,argv);</span><br><span class="line"><span class="comment">// 3.创建节点指针;</span></span><br><span class="line"><span class="keyword">auto</span> node =rclcpp::Node::<span class="built_in">make_shared</span>(<span class="string">&quot;helloworld_node&quot;</span>);</span><br><span class="line"><span class="comment">// 4.输出日志;</span></span><br><span class="line"><span class="built_in">RCLCPP_INFO</span>(node-&gt;<span class="built_in">get_logger</span>(),<span class="string">&quot;hello world!&quot;</span>);</span><br><span class="line"><span class="comment">// 5.释放资源.</span></span><br><span class="line">rclcpp::<span class="built_in">shutdown</span>();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-编辑配置文件"><a href="#4-编辑配置文件" class="headerlink" title="4.编辑配置文件"></a>4.编辑配置文件</h3><p>1.package.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-model href=<span class="string">&quot;http://download.ros.org/schema/package_format3.xsd&quot;</span> schematypens=<span class="string">&quot;http://www.w3.org/2001/XMLSchema&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">format</span>=<span class="string">&quot;3&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>pkg01_helloworld_cpp<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">description</span>&gt;</span>TODO: Package description<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">maintainer</span> <span class="attr">email</span>=<span class="string">&quot;ros2@todo.todo&quot;</span>&gt;</span>ros2<span class="tag">&lt;/<span class="name">maintainer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">license</span>&gt;</span>TODO: License declaration<span class="tag">&lt;/<span class="name">license</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">buildtool_depend</span>&gt;</span>ament_cmake<span class="tag">&lt;/<span class="name">buildtool_depend</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 所需要依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">depend</span>&gt;</span>rclcpp<span class="tag">&lt;/<span class="name">depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">buildtool_depend</span>&gt;</span>ament_cmake<span class="tag">&lt;/<span class="name">buildtool_depend</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">test_depend</span>&gt;</span>ament_lint_auto<span class="tag">&lt;/<span class="name">test_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">test_depend</span>&gt;</span>ament_lint_common<span class="tag">&lt;/<span class="name">test_depend</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">export</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build_type</span>&gt;</span>ament_cmake<span class="tag">&lt;/<span class="name">build_type</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">export</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.CMakeLists.txt</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.8</span>)</span><br><span class="line"><span class="built_in">project</span>(pkg01_helloworld_cpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES <span class="string">&quot;Clang&quot;</span>)</span><br><span class="line">  <span class="built_in">add_compile_options</span>(-Wall -Wextra -Wpedantic)</span><br><span class="line"><span class="built_in">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="meta"># find dependencies</span></span><br><span class="line"><span class="built_in">find_package</span>(ament_cmake REQUIRED)</span><br><span class="line"><span class="meta"># uncomment the following section in order to fill in</span></span><br><span class="line"><span class="meta"># further dependencies manually.</span></span><br><span class="line"># <span class="built_in">find_package</span>(&lt;dependency&gt; REQUIRED)</span><br><span class="line"></span><br><span class="line"># 引入外部依赖包</span><br><span class="line"><span class="built_in">find_package</span>(rclcpp REQUIRED)</span><br><span class="line"></span><br><span class="line"># 映射源文件与可执行文件</span><br><span class="line"><span class="built_in">add_executable</span>(helloworld src/helloworld.cpp)</span><br><span class="line"># 设置目标依赖库</span><br><span class="line"><span class="built_in">ament_target_dependencies</span>(</span><br><span class="line">  helloworld</span><br><span class="line">  <span class="string">&quot;rclcpp&quot;</span></span><br><span class="line">)</span><br><span class="line"># 定义安装规则</span><br><span class="line"><span class="built_in">install</span>(TARGETS helloworld</span><br><span class="line">  DESTINATION lib/$&#123;PROJECT_NAME&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(BUILD_TESTING)</span><br><span class="line">  <span class="built_in">find_package</span>(ament_lint_auto REQUIRED)</span><br><span class="line">  <span class="meta"># the following <span class="keyword">line</span> skips the linter which checks for copyrights</span></span><br><span class="line">  <span class="meta"># comment the <span class="keyword">line</span> when a copyright and license is added to all source files</span></span><br><span class="line">  <span class="built_in">set</span>(ament_cmake_copyright_FOUND TRUE)</span><br><span class="line">  <span class="meta"># the following <span class="keyword">line</span> skips cpplint (only works in a git repo)</span></span><br><span class="line">  <span class="meta"># comment the <span class="keyword">line</span> when this package is in a git repo and when</span></span><br><span class="line">  <span class="meta"># a copyright and license is added to all source files</span></span><br><span class="line">  <span class="built_in">set</span>(ament_cmake_cpplint_FOUND TRUE)</span><br><span class="line">  <span class="built_in">ament_lint_auto_find_test_dependencies</span>()</span><br><span class="line"><span class="built_in">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="built_in">ament_package</span>()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-编译和执行"><a href="#5-编译和执行" class="headerlink" title="5.编译和执行"></a>5.编译和执行</h3><p>在工作空间(ros2_helloworld)目录下运行编译命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colcon build</span><br></pre></td></tr></table></figure>
+<p>可以仅编译指定功能包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colcon build --packages-select &lt;package_name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>激活环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> install/setup.bash </span><br></pre></td></tr></table></figure>
+
+<p>运行节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 run &lt;package_name&gt; &lt;node_name&gt;</span><br></pre></td></tr></table></figure>
+<p>示例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 run pkg01_helloworld_cpp helloworld</span><br></pre></td></tr></table></figure>
+<p><img src= "/img/loading.gif" data-src="/img/ros2_3.png" alt=" ">  </p>
+<p>成功输出hello world！</p>
+<p>**注:**每次终端中执行工作空间下的节点时，都需要调用使用source install&#x2F;setup.bash 命令激活环境，可以将该命令的调用添加进~&#x2F;.bashrc，操作格式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;source /&#123;工作空间路径&#125;/install/setup.bash&quot; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;source ～/ros2_helloworld/install/setup.bash&quot; &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>以后启动终端时，无需再手动刷新环境变量。</p>
+</div>
+        
+  </div>
+
+    <div class="post_tags">
+      
+    </div>
+    <div class="post-nav">
+      
+      
+        <div class="post-nav-next post-nav-item">
+            <a href="/2025/11/03/Cmake/" >Cmake<i class="fa fa-chevron-right"></i></a>
+        </div>
+      
+    </div>
+      
+
+
+
+
+</article>
+
+    
+<a id="gotop" href="javascript:" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    
+
+
+
+
+
+
+    
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        © 2025 <i class="fa fa-heart" id="heart"></i> SweCui 
+        <br>
+        Powered by 
+        <a target="_blank" rel="noopener" href="http://hexo.io">hexo</a> | Theme is <a target="_blank" rel="noopener" href="https://github.com/a2396837/hexo-theme-blank/">blank</a>
+        
+          <div class="icp-info">
+            
+            <img  class="icp-icon" src="/img/icp.png">
+            
+          <a href="" target="_blank"> </a>
+        </div>
+        
+    </div>  
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/layui-src@2.5.5/dist/layui.min.js"></script>
+
+
+
+  
+    <script src="/js/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+  
+
+ 
+
+
+
+  <script>
+    window.lazyLoadOptions = {
+      elements_selector: 'img',
+      threshold: 0
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script>   
+  
+
+
+  <script>
+    var images = $('img').not('.nav-logo img').not('.card img').not($('a>img')).not('.reward-content img')
+    images.each(function (i, o) {
+      var lazyloadSrc = $(o).attr('data-src') ? $(o).attr('data-src') : $(o).attr('src')
+      $(o).wrap(`<a href="${lazyloadSrc}" data-fancybox="group" data-caption="${$(o).attr('alt')}" class="fancybox"></a>`)
+    })
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script>
+  <script>
+        $().fancybox({
+      selector: '[data-fancybox]',
+      loop: true,
+      transitionEffect: 'slide',
+      protect: true,
+      buttons: ['slideShow', 'fullScreen', 'thumbs', 'close']
+    })
+  </script>   
+  
+
+
+
+
+  
+<script>
+if (document.getElementsByClassName('mermaid').length) {
+    if (window.mermaidJsLoad) mermaid.init()
+    else {
+      $.getScript("https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js", function () {
+        window.mermaidJsLoad = true
+        mermaid.initialize({
+          theme: "default",
+        })
+      })
+    }
+  }
+  </script>
+  
+
+
+
+
+  
+<div id="QPlayer">
+	<div id="pContent">
+		<div id="player">
+			<span class="cover"></span>
+			<div class="ctrl">
+				<div class="musicTag marquee">
+					<strong>Title</strong>
+					 <span> - </span>
+					<span class="artist">Artist</span>
+				</div>
+				<div class="progress">
+					<div class="timer left">0:00</div>
+					<div class="contr">
+						<div class="rewind icon"></div>
+						<div class="playback icon"></div>
+						<div class="fastforward icon"></div>
+					</div>
+					<div class="right">
+						<div class="liebiao icon"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ssBtn">
+				<div class="adf"><i class="fas fa-music" style="color: #Fff;"></i></div>
+		</div>
+	</div>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/css/audio.css">
+	<ol id="playlist"></ol>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery.marquee@1.5.0/jquery.marquee.min.js"></script>
+<script>
+	var playlist = [];
+	
+		  playlist.push({title:'所念皆星河',artist:'CMJ',mp3:'https://music.163.com/song/media/outer/url?id=1384026889.mp3',cover:'https://p4.music.126.net/M34HFzLO2xhDLuX_zEALKA==/109951164291347934.jpg'})
+	  
+	var isRotate = true;
+	var autoplay = false;
+  </script>
+<script src="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/js/player.js"></script>
+<script>
+  function bgChange(){
+	var lis= $('.lib');
+	for(var i=0; i<lis.length; i+=2)
+	lis[i].style.background = 'rgba(246, 246, 246, 0.5)';
+  }
+  window.onload = bgChange;
+</script>
+
+  
+
+
+  <script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script>
+  
+
+
+  <script src="https://cdn.jsdelivr.net/gh/a2396837/CDN@latest/js/firework.js"></script>
+  
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js"></script>
+<script>
+!function (e, t, a) {
+  var initCopyCode = function(){
+    var copyHtml = '';
+    copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+    copyHtml += '  <i class="fa fa-clipboard"></i><span>复制</span>';
+    copyHtml += '</button>';
+    $(".highlight .code pre").before(copyHtml);
+    new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+  }
+  initCopyCode();
+}(window, document);
+</script>  
+  
+
+<script>
+  var btntop = $('#gotop');
+  btntop.on('click', function (e) {
+    e.preventDefault();
+    $('html, body').animate({ scrollTop: 0 }, '300');
+  });
+
+  var $table = $('.content table').not($('figure.highlight > table'))
+$table.each(function () {
+  $(this).wrap('<div class="table-wrap"></div>')
+})
+</script>
+
+
+
+</html>
